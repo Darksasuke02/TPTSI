@@ -7,15 +7,17 @@ out vec4 color;
 
  void main (void)
 {
-float x=gl_FragCoord.x/800.0;
-float y=gl_FragCoord.y/800.0;
-float r=abs(cos(15.0*x+29.0*y));
+float x=gl_FragCoord.x/800.0-0.5;
+float y=gl_FragCoord.y/800.0-0.5;
+float r=0.0;
 float g=0.0;
-if(abs(cos(25.0*x*x))>0.95){
+if(x*x+y*y>0.125){
 g=1.0;
+r=0.0;
 }
 else{
 g=0.0;
+r=1.0;
 }
 color = vec4(r,g,0.0,0.0);
 }
