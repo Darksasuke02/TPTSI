@@ -33,7 +33,8 @@ def init_context(window):
     print(f"OpenGL: {GL.glGetString(GL.GL_VERSION).decode('ascii')}")
 
 def init_program():
-    pass
+    program=create_program_from_file('shader.vert','shader.frag')
+    GL.glUseProgram(program)
         
 def init_data():
     pass
