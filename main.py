@@ -6,7 +6,11 @@ import glfw
 import numpy as np
 from math import cos
 
+x=0
+
+
 def init_window():
+
     # initialisation de la librairie glfw
     glfw.init()
     # paramétrage du context opengl
@@ -72,7 +76,7 @@ def run(window):
         if loc == -1 :
             print("Pas de variable uniforme : translation")
         # Modifie la variable pour le programme courant
-        GL.glUniform4f(loc, cos(glfw.get_time()), 0, 0, 0)
+        
 
         # changement de buffer d'affichage pour éviter un effet de scintillement
         glfw.swap_buffers(window)
@@ -81,11 +85,13 @@ def run(window):
 
 
     
-        
+
 
 def key_callback(win, key, scancode, action, mods):
+    global x
     prog = GL.glGetIntegerv(GL.GL_CURRENT_PROGRAM)
     loc = GL.glGetUniformLocation(prog, "couleur")
+    mouv = GL.glGetUniformLocation(prog, "translation")
     GL.glUniform4f(loc, 0.5, 0.5, 0.5, 0)
     # sortie du programme si appui sur la touche 'echap'
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
@@ -96,8 +102,13 @@ def key_callback(win, key, scancode, action, mods):
         GL.glUniform4f(loc, 0, 1, 0, 0)
     if key == glfw.KEY_B and action == glfw.PRESS:
         GL.glUniform4f(loc, 0, 0, 1, 0)
-
-        
+    if key == glfw.KEY_RIGHT and action == glfw.PRESS:
+        x=x+0.01
+        GL.glUniform4f(mouv, x, 0, 0, 0)
+    if key == glfw.KEY_LEFT and action == glfw.PRESS:
+        x=x-0.01
+        GL.glUniform4f(mouv,x, 0, 0, 0)
+    
 
     
 
@@ -145,6 +156,7 @@ def create_program_from_file(vs_file, fs_file):
     fs_content = open(fs_file, 'r').read() if os.path.exists(fs_file)\
         else print(f'{25*"-"}\nError reading file:\n{fs_file}\n{25*"-"}')
     return create_program(vs_content, fs_content)
+
 
 if __name__ == '__main__':
     main()
