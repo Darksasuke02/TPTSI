@@ -56,6 +56,7 @@ def init_data():
     # est utilis ́e pour les positions des sommets
     GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, GL.GL_FALSE, 0, None)
 
+
 def run(window):
     # boucle d'affichage
     while not glfw.window_should_close(window):
@@ -63,18 +64,41 @@ def run(window):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
         GL.glDrawArrays(GL.GL_TRIANGLES, 0, 3)
         #  l'affichage se fera ici
-        
+        # R ́ecup`ere l'identifiant du programme courant
+        prog = GL.glGetIntegerv(GL.GL_CURRENT_PROGRAM)
+        # R ́ecup`ere l'identifiant de la variable translation dans le programme courant
+        loc = GL.glGetUniformLocation(prog, "translation")
+        # V ́erifie que la variable existe
+        if loc == -1 :
+            print("Pas de variable uniforme : translation")
+        # Modifie la variable pour le programme courant
+        GL.glUniform4f(loc, cos(glfw.get_time()), 0, 0, 0)
+
         # changement de buffer d'affichage pour éviter un effet de scintillement
         glfw.swap_buffers(window)
         # gestion des évènements
         glfw.poll_events()
+
+
+    
         
 
 def key_callback(win, key, scancode, action, mods):
+    prog = GL.glGetIntegerv(GL.GL_CURRENT_PROGRAM)
+    loc = GL.glGetUniformLocation(prog, "couleur")
+    GL.glUniform4f(loc, 0.5, 0.5, 0.5, 0)
     # sortie du programme si appui sur la touche 'echap'
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(win, glfw.TRUE)
-       
+    if key == glfw.KEY_R and action == glfw.PRESS:
+        GL.glUniform4f(loc, 1, 0, 0, 0)
+    if key == glfw.KEY_G and action == glfw.PRESS:
+        GL.glUniform4f(loc, 0, 1, 0, 0)
+    if key == glfw.KEY_B and action == glfw.PRESS:
+        GL.glUniform4f(loc, 0, 0, 1, 0)
+
+        
+
     
 
 def main():
