@@ -61,7 +61,7 @@ def run(window):
     while not glfw.window_should_close(window):
         # nettoyage de la fenêtre : fond et profondeur
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-        GL.glDrawArrays(GL.GL_TRIANGLES, 0, 3)
+        GL.glDrawArrays(GL.GL_LINE_LOOP, 0, 3)
         #  l'affichage se fera ici
         
         # changement de buffer d'affichage pour éviter un effet de scintillement
