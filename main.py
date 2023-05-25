@@ -4,6 +4,7 @@ import os
 import OpenGL.GL as GL
 import glfw
 import numpy as np
+from math import cos
 
 def init_window():
     # initialisation de la librairie glfw
@@ -28,7 +29,7 @@ def init_context(window):
     GL.glEnable(GL.GL_DEPTH_TEST)
     # choix de la couleur de fond
     GL.glClearColor(0, 0, 0, 1.0)
-    print(glfw.get_time())
+
     print(f"OpenGL: {GL.glGetString(GL.GL_VERSION).decode('ascii')}")
 
 def init_program():
@@ -44,7 +45,7 @@ def run(window):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
 
         #  l'affichage se fera ici
-
+        GL.glClearColor(abs(cos(glfw.get_time())), abs(cos(glfw.get_time())), abs(cos(glfw.get_time())), 1.0)
         # changement de buffer d'affichage pour éviter un effet de scintillement
         glfw.swap_buffers(window)
         # gestion des évènements
@@ -55,6 +56,7 @@ def key_callback(win, key, scancode, action, mods):
     # sortie du programme si appui sur la touche 'echap'
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(win, glfw.TRUE)
+       
     
 
 def main():
