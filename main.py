@@ -37,16 +37,33 @@ def init_program():
     GL.glUseProgram(program)
         
 def init_data():
-    pass
+    sommets = np.array(((0, 0, 0), (1, 0, 0), (0, 1, 0)), np.float32)
+    # attribution d'une liste d' ́etat (1 indique la cr ́eation d'une seule liste)
+    vao = GL.glGenVertexArrays(1)
+    # affectation de la liste d' ́etat courante
+    GL.glBindVertexArray(vao)
+    # attribution d’un buffer de donn ́ees (1 indique la cr ́eation d’un seul buffer)
+    vbo = GL.glGenBuffers(1)
+    # affectation du buffer courant
+    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
+    # copie des donnees des sommets sur la carte graphique
+    GL.glBufferData(GL.GL_ARRAY_BUFFER, sommets, GL.GL_STATIC_DRAW)
+    # Les deux commandes suivantes sont stock ́ees dans l' ́etat du vao courant
+    # Active l'utilisation des donn ́ees de positions
+    # (le 0 correspond `a la location dans le vertex shader)
+    GL.glEnableVertexAttribArray(0)
+    # Indique comment le buffer courant (dernier vbo "bind ́e")
+    # est utilis ́e pour les positions des sommets
+    GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, GL.GL_FALSE, 0, None)
 
 def run(window):
     # boucle d'affichage
     while not glfw.window_should_close(window):
         # nettoyage de la fenêtre : fond et profondeur
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-
+        GL.glDrawArrays(GL.GL_TRIANGLES, 0, 3)
         #  l'affichage se fera ici
-        GL.glClearColor(abs(cos(glfw.get_time())), abs(cos(glfw.get_time())), abs(cos(glfw.get_time())), 1.0)
+        
         # changement de buffer d'affichage pour éviter un effet de scintillement
         glfw.swap_buffers(window)
         # gestion des évènements
