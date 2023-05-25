@@ -2,7 +2,7 @@
 
 // Variable de sortie (sera utilisé comme couleur)
 out vec4 color;
-
+error
 //Un Fragment Shader minimaliste
 void main (void)
 {
