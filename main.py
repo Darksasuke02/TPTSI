@@ -28,6 +28,7 @@ def init_context(window):
     GL.glEnable(GL.GL_DEPTH_TEST)
     # choix de la couleur de fond
     GL.glClearColor(0, 0, 0, 1.0)
+    print(glfw.get_time())
     print(f"OpenGL: {GL.glGetString(GL.GL_VERSION).decode('ascii')}")
 
 def init_program():
@@ -48,11 +49,13 @@ def run(window):
         glfw.swap_buffers(window)
         # gestion des évènements
         glfw.poll_events()
+        
 
 def key_callback(win, key, scancode, action, mods):
     # sortie du programme si appui sur la touche 'echap'
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(win, glfw.TRUE)
+    
 
 def main():
     window = init_window()
